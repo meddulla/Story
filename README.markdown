@@ -21,31 +21,31 @@ Now create a test in the folder features, eg. demo.php
 
 `
 
-require_once 'Story.php';
-class demo extends Story
-{
-    public function __construct()
+    require_once 'Story.php';
+    class demo extends Story
     {
-        parent::__construct();
+        public function __construct()
+        {
+            parent::__construct();
+        }
+
+
+        /**
+         * scenario_home_should_not_have_john function.
+         *
+         * @Tags: wip
+         *
+         * @access public
+         * @return string
+         */
+        public function scenario_home_should_not_have_john()
+        {
+            $this->Given('Variable Home is where the heart is')
+            ->Then('I should not see John')
+            ->Also('I should not see error');
+        }
+
     }
-
-
-    /**
-     * scenario_home_should_not_have_john function.
-     *
-     * @Tags: wip
-     *
-     * @access public
-     * @return string
-     */
-    public function scenario_home_should_not_have_john()
-    {
-        $this->Given('Variable Home is where the heart is')
-        ->Then('I should not see John')
-        ->Also('I should not see error');
-    }
-
-}
 
 `
 
@@ -215,7 +215,7 @@ In steps/Steps.php add your step and in the docblock define its matcher.
 
 Eg.
 
-<pre>
+´
     /**
      * step_file_should_exist function.
      *
@@ -239,8 +239,8 @@ Eg.
         return $story;
     }
 
-</pre>
 
+´
 Each step receives the matches and an instance of the story
 object which it should return. Here you can put all your commonly
 used steps.
@@ -248,40 +248,40 @@ used steps.
 The second place you can add steps is the child class of Story,
 for example:
 
-<pre>
-require_once 'Story.php';
-class Story_App extends Story
-{
-    /**
-     * step_insert_fixture function.
-     *
-     * @StepMatches: /^I have (.+) (.+)$/
-     *
-     * @param array $matches
-     *
-     * @access public
-     * @return string
-     */
-    public function step_insert_fixture($matches)
+´
+    require_once 'Story.php';
+    class Story_App extends Story
     {
-        $value = $matches[1];
-        $class = $matches[2];
+        /**
+         * step_insert_fixture function.
+         *
+         * @StepMatches: /^I have (.+) (.+)$/
+         *
+         * @param array $matches
+         *
+         * @access public
+         * @return string
+         */
+        public function step_insert_fixture($matches)
+        {
+            $value = $matches[1];
+            $class = $matches[2];
 
-        $list[] = array('title' => 'Helld', 'id'=>1);
-        $list[] = array('title' => 'Bye','id' => 2);
+            $list[] = array('title' => 'Helld', 'id'=>1);
+            $list[] = array('title' => 'Bye','id' => 2);
 
-        $this->value = $list;
-        return $this;
+            $this->value = $list;
+            return $this;
+        }
+
     }
 
-}
-
-</pre>
-
+´
 Notice how you don't need the $story object and simply return $this.
 
 In your test file, eg. features/demo.php you simply extend from Story_App and not from Story
 So this
+
 `
     require_once 'Story.php';
     class demo extends Story
@@ -315,64 +315,65 @@ We could probably integrate StoryRunner itself in CI but this serves the purpose
 of showing how easily you can use Story right now in your projects.
 
 `
-require_once(APPPATH . '/libraries/Story.php');
-class demo_tests extends Toast
-{
-    function __construct()
-	{
-		parent::Toast(__FILE__);
-		// Load any models, libraries etc. you need here
-	}
-
-    public function _pre()
-	{
-        //reset story
-        $this->story = null;
-        $this->story = new Story_App();
-
-	}
-
-    function _post()
+    require_once(APPPATH . '/libraries/Story.php');
+    class demo_tests extends Toast
     {
-        //send story errors to toast
-        if($this->story->spec->fails > 0){
-            $this->asserts = FALSE;
-            //collect failure messages
-            $this->_fail(implode(', ',$this->story->spec->failures));
+        function __construct()
+        {
+            parent::Toast(__FILE__);
+            // Load any models, libraries etc. you need here
         }
+
+        public function _pre()
+        {
+            //reset story
+            $this->story = null;
+            $this->story = new Story_App();
+
+        }
+
+        function _post()
+        {
+            //send story errors to toast
+            if($this->story->spec->fails > 0){
+                $this->asserts = FALSE;
+                //collect failure messages
+                $this->_fail(implode(', ',$this->story->spec->failures));
+            }
+        }
+        
+        //bdd style test
+        public function test_posts_webpage_does_display_errors()
+        {
+           $this->story->Given('I am on the posts/')
+                        ->Then('I should not see "PHP Error"');
+        }
+        
+        //better readability of unit test
+        //by using Spec library in Story
+        public function test_header_en_has_english_items()
+        {
+            $this->lang->set('en');
+            $html_header = $this->load->view('default/frontend/header','',true);
+            $this->story->spec->value($html_header)
+                ->contains('Videos')
+                ->contains('Welcome')
+                ->does_not_contain('error');
+        }
+
+        //typical toast style
+        public function test_get_menus_highlights()
+        {
+            $menus = $this->amodel->getMenus();
+            $this->_assert_contains('home',$menus);
+            $this->_assert_contains('Contacts',$menus);
+            $this->_assert_not_contains('error',$menus);
+        }
+
+
+
     }
-    
-    //bdd style test
-    public function test_posts_webpage_does_display_errors()
-    {
-       $this->story->Given('I am on the posts/')
-                    ->Then('I should not see "PHP Error"');
-    }
-    
-    //better readability of unit test
-    //by using Spec library in Story
-    public function test_header_en_has_english_items()
-    {
-        $this->lang->set('en');
-        $html_header = $this->load->view('default/frontend/header','',true);
-        $this->story->spec->value($html_header)
-            ->contains('Videos')
-            ->contains('Welcome')
-            ->does_not_contain('error');
-    }
 
-    //typical toast style
-    public function test_get_menus_highlights()
-	{
-        $menus = $this->amodel->getMenus();
-        $this->_assert_contains('home',$menus);
-        $this->_assert_contains('Contacts',$menus);
-        $this->_assert_not_contains('error',$menus);
-	}
-
-
-
-}
 `
 
 
@@ -382,6 +383,7 @@ class demo_tests extends Toast
 But how do you go about creating your own steps? You basically add your own to the steps file which already has some predefined steps (or in another file, see below).
 
 Open Story/Steps.php. You'll see the step that matched one of the tests above
+
 `
     /**
      * step_item function.
