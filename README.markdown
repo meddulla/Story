@@ -54,9 +54,9 @@ or in console: $ php StoryRunner.php -p features/demo.php
 
 You should see
 
-Tests Failed: 0
-Tests Passed: 1
-Total Tests: 1
+    Tests Failed: 0
+    Tests Passed: 1
+    Total Tests: 1
 
 
 That's a really simple test asking if the string "Home is where the heart is" contains Home, and does not contain John or error - if these 3 conditions are true the test passes.
@@ -64,7 +64,8 @@ That's a really simple test asking if the string "Home is where the heart is" co
 But you can also work with arrays:
 
 `
-   /**
+
+    /**
      * scenario_books_contain_correct_authors function.
      *
      * @Tags: arrays
@@ -128,14 +129,14 @@ The value under test is always in the $this->value variable, so you could echo t
 You could also set your base path and all paths would be relative to that. For example:
 
 `
-     /**
-     * test_header_Nytimes_Politics function.
-     *
-     * @Tags: wip
-     *
-     * @access public
-     * @return string
-     */
+    /**
+    * test_header_Nytimes_Politics function.
+    *
+    * @Tags: wip
+    *
+    * @access public
+    * @return string
+    */
     public function scenario_header_Nytimes_Politics()
     {
         $this->setBasePath( 'http://www.nytimes.com/');
@@ -152,58 +153,63 @@ You could also set your base path and all paths would be relative to that. For e
 ####Run from the console 
 
 Run all tests in scenarios with Tag wip
+    $ php StoryRunner.php -t wip
 
-$ php StoryRunner.php -t wip
+Run all features in given Path
+    $ php StoryRunner.php -p mytests/
 
-Run all feature in given Path
-
-$ php StoryRunner.php -p mytests/
+Run a single feature in given Path
+    $ php StoryRunner.php -p mytests/demo.php
 
 Rerun only failed scnearios in last run
-
-$ php StoryRunner.php -r 
+    $ php StoryRunner.php -r 
 
 #### Run from the browser 
 
-Run all tests in features: http://localhost/mysite/Story/StoryRunner.php
+Run all tests in features: 
+    http://localhost/mysite/Story/StoryRunner.php
 
-Run all tests in features of a given tag: http://localhost/mysite/Story/StoryRunner.php?tag=wip
+Run all tests in features of a given tag: 
+    http://localhost/mysite/Story/StoryRunner.php?tag=wip
 
-Run all tests in given path: http://localhost/mysite/Story/StoryRunner.php?path=mytests/
+Run all tests in given path: 
+    http://localhost/mysite/Story/StoryRunner.php?path=mytests/
 
-Run only last failed tests: http://localhost/mysite/Story/StoryRunner.php?rerun=1/
+Run only last failed tests: 
+    http://localhost/mysite/Story/StoryRunner.php?rerun=1/
 
-Run a single test: http://localhost/mysite/Story/StoryRunner.php?path=features/demo.php
+Run a single test: 
+    http://localhost/mysite/Story/StoryRunner.php?path=features/demo.php
 
 ## Available Steps 
 
 List of already available steps (those in
 Steps.php and Spec):
 
-@StepMatches: /^I am on(?: the)* (.+)$/
-    Fetches given webpage, eg. 
-        $this->Given('I am on the http://www.google.com')
-    If you set the base path, you can use relative urls
-        $this->base_path = 'http://mysite.com/';
-        $this->Given('I am on the articles')
-        would fetch http:/mysite.com/articles
+    @StepMatches: /^I am on(?: the)* (.+)$/
+        Fetches given webpage, eg. 
+            $this->Given('I am on the http://www.google.com')
+        If you set the base path, you can use relative urls
+            $this->base_path = 'http://mysite.com/';
+            $this->Given('I am on the articles')
+            would fetch http:/mysite.com/articles
 
-@StepMatches: /^I, as agent "(.+)", am on(?: the)* (.+)$/
-@StepMatches: /^Variable "(.+)" as json$/
-@StepMatches: /^Variable (.+)$/
-@StepMatches: /^They should have a definition for (.+)$/
-@StepMatches: /^Item (.*) (.*) should contain (.+)$/
-@StepMatches: /^I have a file at (.+)$/
-@StepMatches: /^file "([^"]*)" should exist$/
-@StepMatches: /^I should see "([^\"]*)" "(.+)" times in "(.+)" selector$/
-@StepMatches: /^I should see "([^\"]*)" in "(.+)" selector$/
-@StepMatches: /^I should not see "([^\"]*)" in "(.+)" selector$/
-@StepMatches: /^I should see "([^\"]*)" "(.+)" times$/
-@StepMatches: /^I should see "([^\"]*)"$/
-@StepMatches: /^I should not see "([^\"]*)"$/
-@StepMatches: /^I (post|get) to (.+) as json: "(.+)"$/
-@StepMatches: /^I ajax (post|get) to (.+) as json: "(.+)"$/
-@StepMatches: /^I post to "(.+)" as user "(.+)" and pass "(.+)"$/
+    @StepMatches: /^I, as agent "(.+)", am on(?: the)* (.+)$/
+    @StepMatches: /^Variable "(.+)" as json$/
+    @StepMatches: /^Variable (.+)$/
+    @StepMatches: /^They should have a definition for (.+)$/
+    @StepMatches: /^Item (.*) (.*) should contain (.+)$/
+    @StepMatches: /^I have a file at (.+)$/
+    @StepMatches: /^file "([^"]*)" should exist$/
+    @StepMatches: /^I should see "([^\"]*)" "(.+)" times in "(.+)" selector$/
+    @StepMatches: /^I should see "([^\"]*)" in "(.+)" selector$/
+    @StepMatches: /^I should not see "([^\"]*)" in "(.+)" selector$/
+    @StepMatches: /^I should see "([^\"]*)" "(.+)" times$/
+    @StepMatches: /^I should see "([^\"]*)"$/
+    @StepMatches: /^I should not see "([^\"]*)"$/
+    @StepMatches: /^I (post|get) to (.+) as json: "(.+)"$/
+    @StepMatches: /^I ajax (post|get) to (.+) as json: "(.+)"$/
+    @StepMatches: /^I post to "(.+)" as user "(.+)" and pass "(.+)"$/
 
 
 
