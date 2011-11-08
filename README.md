@@ -1,6 +1,6 @@
 ##  INTRODUCTION
 
-Story is a simple BDD tool for PHP 5.2 and above. There are other tools available, like Behat and RSpec but they are 5.3 only. I have ongoing projects built in 5.2 and I wanted a simple bdd tool to help me better test them, so I built it: Story, a really simple BDD tool for PHP 5.2 and above.
+Story is a simple BDD tool for PHP 5.2 and above. 
 
 ##  GET STARTED 
 
@@ -16,7 +16,6 @@ Download the zip/tar file and extract it. You'll have the following directory st
         features/ - where your features/tests are stored
 
 Now create a feature in the folder features, eg. demo.php
-
 
     require_once 'Story.php';
     class demo extends Story
