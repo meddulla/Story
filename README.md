@@ -141,7 +141,10 @@ You could also set your base path and all paths would be relative to that. For e
     }
  
     
-    The use of the base_path in constructing the url to be fetched depends on the presence or absence of http in the web page address. So even after setting the base_path you could fetch other sites, as long as you put the absolute url, http://www.google.com, not www.google.com.
+The use of the base_path in constructing the url to be fetched depends on the presence or absence of http 
+in the web page address. 
+So even after setting the base_path you could fetch other sites, as long as you put the absolute url, 
+http://www.google.com, not www.google.com.
 
 ##  RUNNING TESTS 
 
@@ -186,7 +189,8 @@ Run a single feature:
     http://localhost/mysite/Story/StoryRunner.php?path=features/demo.php
 
 
-Failed scenarios are stored in csv format in the Story/.rerun file. Then when in rerun mode, Story reads that file and only runs the scenarios in that file.
+Failed scenarios are stored in csv format in the Story/.rerun file. 
+Then when in rerun mode, Story reads that file and only runs the scenarios in that file.
 
 
 
@@ -312,15 +316,15 @@ for example:
     
 Notice how you don't need the $story object and simply return $this.
 
-In your feature file, eg. features/demo.php you simply extend from Story_App and not from Story
-So this
+In your feature file, eg. features/demo.php you simply extend from Story_App and not from Story.
 
+So this:
  
     require_once 'Story.php';
     class demo extends Story
  
 
-becomes this
+becomes this:
 
  
     require_once 'Story.php';
