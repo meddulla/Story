@@ -268,6 +268,23 @@ Each step receives the matches and an instance of the story
 object which it should return. Here you can put all your commonly
 used steps.
 
+Now use your step in demo.php
+
+    /**
+    * scenario_txt function.
+    *
+    * @Tags: wip
+    *
+    * @access public
+    * @return string
+    */
+    public function scenario_txt()
+    {
+        $this->Given('I am on the politics')// example
+        ->Then('txt "politics" should exist');
+    }
+
+
 Option 2: The second place you can add steps is the child class of Story,
 for example:
 
